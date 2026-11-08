@@ -349,7 +349,27 @@ param_4487,track
 param_4488,fanfare
 param_4489,requirement
 param_4490,itemId
-class_300,AsyncStateMachine
+## AsyncStateMachine
+class_300,AsyncStateMachine_EnumeratePuzzleSelectEvents
+param_4491,state
+field_2332,state
+field_2333,currentEvent
+field_2334,threadId
+field_2335,campaigns
+field_2336,campaignIndex
+field_2337,chapters
+field_2338,chapterIndex
+field_2339,currentChapter
+field_2340,chapterCompletePuzzleCount
+field_2341,campaignItems
+field_2342,currentCampaignItem
+method_834,Dispose
+method_835,DisposeInner
+method_836,GetCurrent
+method_837,Reset
+method_838,GetCurrent_untyped
+method_839,GetEnumerator
+method_840,GetEnumerator_untyped
 ## LambdaGeneratedClass
 class_460,LambdaGeneratedClass
 field_4176,instance
@@ -643,7 +663,7 @@ field_2765,maxPuzzleFormatVersion
 field_2766,puzzleId
 field_2767,puzzleName
 field_2768,journalAuthor
-# field_4614,                        ?????
+field_4614,leaderboardKeyPrefix
 field_2769,puzzleTip
 field_2770,inputs
 field_2771,outputs
@@ -659,7 +679,7 @@ field_2780,outputMultiplier
 field_2781,isWorkshop
 field_2782,isCustom
 field_2783,fileHash
-# field_2784,			!not set at creation?
+field_2784,fileSavedBySteamUser
 param_4980,path
 param_4981,path
 param_4982,writer
@@ -970,7 +990,7 @@ method_898,CopyInstructionsTo
 method_899,FirstInstructionIndex
 method_900,LastInstructionIndex
 method_901,GetInstruction
-# method_902,
+method_902,GetInstructionsWithIndices
 method_903,HasInstruction
 method_904,Count
 method_905,SetInstruction
@@ -1002,7 +1022,7 @@ param_4563,instructionList
 param_4564,instructionIndex
 ## NestedClasses
 ## NestedClasses
-# class_318,AsyncStateMachine
+class_318,AsyncStateMachine_EnumerateInstructionsWithIndices
 ## LambdaGeneratedClass
 class_468,LambdaGeneratedClass
 field_4191,instance
@@ -1058,6 +1078,7 @@ enum_144.5,Grab
 enum_144.6,Reset
 enum_144.7,Repeat
 enum_144.8,Halt
+enum_144.255,Custom
 
 ## InstructionType
 method_1036,GetHotkey
@@ -1147,13 +1168,13 @@ method_1174,SetConduitHexes
 method_1175,Clone
 method_1176,SetupInputOutputFromSolution
 method_1177,HasNoParent
-method_1178,GetSimState
+method_1178,CreateSimState
 method_1179,GetRootPart
 method_1180,GetParentList
 method_1181,CollectSelfAndSubparts
 method_1182,CollectSelfAndSubparts
 method_1183,GetDebugReferenceName
-method_1184,InFrontBy
+method_1184,GlobalPosFromLocal
 method_1185,GetMoleculeForInputOutput
 method_1186,GetHexFootprint
 method_1187,GetHexFootprintWithTransform
@@ -1174,6 +1195,8 @@ method_1201,HasArms
 method_1202,HasAtoms
 method_1203,IsNotConduit
 method_1204,InitConduit
+method_2519,UpdateOutputType
+param_8769,isRepeating
 method_1205,SetType2
 field_2689,minLength
 field_2690,maxLength
@@ -1223,11 +1246,11 @@ param_4924,solution
 param_4925,rotation
 param_8258,solution
 param_4926,rotation
-param_4927,armLenght
+param_4927,armLength
 param_4928,conduitHexes
 param_4929,type
 ## NestedClasses
-class_360,AsyncStateMachine
+class_360,AsyncStateMachine_EnumeratePartAncestors
 
 ## PartType
 class_139,PartType
@@ -1253,8 +1276,8 @@ field_1543,isConduit
 field_1544,attachedAtoms
 field_1545,isSubpart
 field_1546,canRotateInEditor
-field_1547,baseTexture
-field_1548,hoverTexture
+field_1547,iconTexture
+field_1548,iconHoverTexture
 field_1549,glowTexture
 field_1550,strokeTexture
 field_1551,permissionCategory
@@ -1674,7 +1697,7 @@ method_502,GetSolution
 method_503,GetSimPlayState
 method_504,GetCycleTime
 method_505,HasError
-# method_506,GetFastForwardCycleTarget  -!- find Better Name For Current Version
+method_506,GetVolumeMultiplier
 method_507,GetSimulation
 method_509,GetSimTime
 method_510,GetRealTime
@@ -1686,9 +1709,15 @@ method_515,GetTrackStartPos
 method_516,GetTrackEndPos
 method_517,IsPartSelected
 method_518,HandleSimulationError
-# method_2448,
+method_2448,GetInverseBoardScale
 method_2449,GetMousePos
-# method_1984,
+method_1984,RenderSolution
+param_5533,boardOffset
+param_5534,backgroundBounds
+param_5535,visibleBounds
+param_5536,renderProgrammablePartIndices
+param_5537,ghostMolecules
+param_5538,recordedSolutionVialTextures
 method_1985,GetHolder
 method_1986,GetGripperState
 method_1987,GetLightForGripper
@@ -1699,14 +1728,18 @@ method_1991,TransitionState
 method_1992,TransitionState
 method_1993,RenderPart
 method_1994,RenderPartOverlays
-method_1995,GetLightData
+method_1995,GetArmCursorIntersectionData
 method_1996,RenderPartBase
 method_1997,RenderGlow
 method_1998,RenderStroke
 method_1999,GetPos
 method_2000,RenderInputOutputEffects
-method_2001,GetGlossOfset
-# method_2450,
+method_2001,GetGlossOffset
+method_2450,RenderMaskedGloss
+param_8686,partRenderer
+param_8687,glossTexture
+param_8688,maskTexture
+param_8689,offset
 method_2002,RenderCenterRotated
 method_2003,RenderLights
 method_2004,RenderWithLights
@@ -1717,28 +1750,45 @@ method_2008,RenderPistonLights
 method_2009,ClearDebugMarkers
 method_2010,AddDebugMarker
 method_2011,GetHoveredPart
-# method_2012,
-method_2013,DoesTransfOvelapAtPoint
+method_2012,GetHoveredArm
+param_5606,mousePos
+param_5607,boardOffset
+param_5608,armLikeParts
+method_2013,DoesTextureIntersectPoint
+param_5609,texture
+param_5610,texturePos
+param_5611,texturePivotOffset
+param_8328,textureRotation
+param_5613,point
 method_2014,RenderBoard
+param_5614,screenSpaceBounds
+param_5615,boardOffset
+param_5616,renderLogoHex
+param_8690,inverseBoardScale
 method_2015,RenderMoleculeWithHolder
+param_5617,molecule
+param_5618,partPos
+param_8329,opacityMultiplier
 method_2016,RenderRotated
 method_2017,RenderHexSelection
 method_2018,GetScaledClampedCycleTime
 method_2019,GetClampedCycleTime
 method_2020,RenderGlyphEffects
 method_2021,RenderConsumptionEffects
-# method_2451,
-# method_2022,
-# method_2452,
+method_2451,RenderEffects
+param_8691,effects
+param_8692,boardOffset
+method_2022,GetShadowOffsetAtPos
+param_8331,screenPos
 method_2452,IsCompleted
-field_3935,glyphEffects
-# field_3936,   glyphEffects2 ???
+field_3935,underneathPartsGlyphEffects
+field_3936,glyphEffects
 field_3937,consumptionEffects
-# field_4742,
-# field_4743,
+field_4742,programGrid
+field_4743,needsToRecreateProgramGrid
 field_3938,debugMarkerPositions
-# field_3939,
-# field_3940,
+field_3939,unusedLightRed
+field_3940,boardHexTints
 param_5524,part
 param_5525,part
 # param_5526,
@@ -1793,14 +1843,10 @@ param_5571,intermState
 param_5572,hexPos
 param_5573,intermState
 param_5574,offset
-param_4854,molecule
+param_8327,molecule
 param_5575,isInput
 param_5576,renderer
 param_5577,hexPos
-# param_8686,
-# param_8687,
-# param_8688,
-# param_8689,
 param_5578,texture
 param_5579,pos
 param_5580,centerOffset
@@ -1829,21 +1875,6 @@ param_5602,intermState
 param_5603,pos
 param_5604,mousePos
 param_5605,boardOffset
-# param_5606,
-# param_5607,
-# param_5608,
-param_5609,texture
-param_5610,centerOffset
-param_5611,pos
-param_8328,rotation
-param_5613,point
-# param_5614,
-# param_5615,
-# param_5616,
-# param_8690,
-param_5617,molecule
-param_5618,partPos
-# param_8329,
 param_5619,texture
 param_5620,color
 param_5621,pos
@@ -1854,22 +1885,20 @@ param_5624,color
 param_5625,glyphEffects
 param_5626,offset
 param_5627,offset
-# param_8691,
-# param_8692,
-# param_8331,
 param_8693,effect
 ## NestedClasses
 class_420,HexModuloList
 method_2024,At
 field_3941,list
-class_421,AsyncStateMachine
+class_421,AsyncStateMachine_EnumerateArmCursorIntersectionData
 # class_423,
-# method_2032,
-# method_2033,
-# field_3958,
-# field_3959,
-# param_5631,
-# param_5632,
+method_2032,GetAlphaForPartGlow
+method_2033,RenderAtom
+field_3958,solutionEditor
+field_3959,boardOffset
+param_5630,part
+param_5631,atomType
+param_5632,position
 ## LambdaGeneratedClass
 class_494,LambdaGeneratedClass
 field_4282,instance
@@ -1895,7 +1924,8 @@ method_2089,GetSimulationError
 method_2462,SetSimulationError
 method_2091,CloseButtonDisplayArea
 method_2092,PreventLowerScreenUpdates
-# method_2463,
+param_8705,doRender
+method_2463,RenderAtBoardScale
 method_2093,RenderNote
 method_2094,GetButtonState
 method_2095,EditorPanels
@@ -1925,7 +1955,7 @@ method_2118,IsPartEditMode
 method_2119,IsNormalMode
 method_2120,ClearInstrSelection
 method_2121,ClearPartSelection
-# method_2464,
+method_2464,GetBoardPanelScreenBounds
 method_2122,GetSolutionWindowBounds
 method_2123,BoardPanelContainsMouse
 method_2124,PartsPanelContainsMouse
@@ -1937,9 +1967,9 @@ method_2467,RenderErrorPanel
 method_2127,GetCycle
 method_2128,GetOccupiedHexes
 method_2129,GetProgram
-# method_2130,
-method_2131,GetInputOutputConduitHexes
-# method_2468,
+method_2130,GetRotationHandlePosFromGlyphFootprint
+method_2131,GetGlyphFootprintHexes
+method_2468,RenderInputModeOverlay
 field_4001,partsPanel
 field_4002,boardPanel
 field_4003,programPanel
@@ -2045,7 +2075,7 @@ field_4048,width
 field_4049,text
 param_5734,bounds
 param_4703,isHover
-class_436,AsyncStateMachine
+class_436,AsyncStateMachine_EnumerateEditorPanels
 ## LambdaGeneratedClass
 class_498,LambdaGeneratedClass
 field_4291,instance
@@ -2073,7 +2103,7 @@ param_4000,deltaPos
 class_153,SolutionEditorBoardPanel
 method_359,GetBoardOffset
 method_360,SetBoardStartOffset
-method_2349,RenderHighlightsAndGhosts
+method_2349,RenderSolution
 param_8102,solEditScrn
 param_3616,deltaTime
 param_3617,panningMode
@@ -2224,7 +2254,7 @@ param_8338,part
 param_8339,part
 class_426,OutputMatcher
 method_2042,OutputWMatchingIndex
-method_2043,OutputWMatchingIndex
+method_2043,OutputWMatchingIndex2
 param_5640,part
 param_4647,part
 field_3970,index
@@ -2236,10 +2266,10 @@ param_5642,part
 field_3971,index
 class_428,ToolbarManager
 method_2046,AddTypeToToolbar
-# method_2047,
+method_2047,AddSection
 param_5643,partToolbar
 param_5644,partType
-# param_5645,
+param_5645,name
 param_5646,partToolbar
 field_3972,partsPanel
 field_3973,sections
@@ -2332,8 +2362,8 @@ param_4461,isEnabled
 
 ## Editor
 class_525,Editor
-# method_921,
-# method_922,
+method_921,GetBoardScreenBounds
+method_922,GetLightSourcePosition
 method_923,RenderBandBox
 method_924,RenderPartHandle
 method_2331,RenderMolecule
@@ -2406,9 +2436,11 @@ field_4481,solutionEditor
 ## Solution
 method_1934,GetPuzzle
 method_1935,SetPuzzle
-# method_1936,
+method_1936,GetPartsForRendering
+param_5478,sim
 method_1937,CollectPartsAndSubparts
-# method_1938,
+method_1938,CollectPartsAndSubpartsForRendering
+param_5479,sim
 method_1939,RepositionPart
 method_1940,RemovePart
 method_1941,GetOrderedProgrammables
@@ -2419,7 +2451,7 @@ method_1945,ResetAllById
 method_1946,ComparePosition
 method_1947,GetOccupiedHexes
 method_1948,IsAllowedPlacement
-method_1949,CanArmBePlacedInChamber
+method_1949,CanArmReplacePart
 method_1950,GetChamberHexes
 method_1951,IsArmInsideChamber
 method_1952,GetContainingChambers
@@ -2431,6 +2463,7 @@ method_1957,FromPuzzle
 method_1958,GetSolutionAt
 method_1959,ToData
 method_1960,FromData
+method_2522,UpdateOutputPartTypes
 method_1961,SaveSnapshot
 method_1962,CreateSnapshot
 method_1963,RestoreSnapshot
@@ -2457,8 +2490,6 @@ param_5474,solutionName
 param_5475,solutionDiscName
 param_5476,creationTime
 param_5477,puzzle
-# param_5478,
-# param_5479,
 param_5480,part
 param_5481,newHexPos
 param_5482,part
@@ -2518,6 +2549,8 @@ method_1977,IsTrue
 method_1978,IsProgrammable
 method_1979,GetProgramIndex
 method_1980,NotFixedAndNotSubpart
+method_2523,GetParts
+param_8772,snapshot
 method_1981,IsNotFixed
 method_1982,IsNotFixed
 method_1983,GetSerialNumber
@@ -2595,7 +2628,7 @@ param_150,simTime
 param_151,realTime
 param_152,solutionEditor
 param_8570,solutionEditor
-param_8571,pos
+param_8571,boardOffset
 param_8572,angle
 param_8573,solutionEditor
 
@@ -2623,7 +2656,7 @@ param_8405,time
 param_8406,solutionEditor
 param_8407,time
 param_8408,solutionEditor
-param_8409,pos
+param_8409,boardOffset
 param_8410,angle
 param_8411,solutionEditor
 
@@ -2640,7 +2673,7 @@ param_8553,pos
 param_8554,text
 param_8555,errorDict
 param_8556,solutionEditor
-param_8557,pos
+param_8557,boardOffset
 param_8558,angle
 
 ## TextureEffect
@@ -2660,7 +2693,7 @@ param_8426,delay
 param_8427,solutionEditor
 param_8428,solutionEditor
 param_8429,solutionEditor
-param_8430,pos
+param_8430,boardOffset
 param_8431,angle
 param_8432,solutionEditor
 
@@ -2684,7 +2717,7 @@ param_8479,offset
 param_8480,angleOffset
 param_8481,delay
 param_8482,solutionEditor
-param_8483,pos
+param_8483,boardOffset
 param_8484,angle
 
 ## TransmutationEffect
@@ -2722,7 +2755,7 @@ param_8492,solutionEditor
 param_8493,atomRef1
 param_8494,atomRef2
 param_8495,solutionEditor
-param_8496,pos
+param_8496,boardOffset
 param_8497,angle
 param_8498,solutionEditor
 
@@ -2750,7 +2783,7 @@ param_8528,velocity
 param_8529,angularVelocity
 param_8530,shadowEffect
 param_8531,solutionEditor
-param_8532,_pos
+param_8532,boardOffset
 param_8533,angle
 param_8534,solutionEditor
 
@@ -2868,10 +2901,13 @@ param_4158,solEditScrn
 
 ## InstructionInsertInputMode
 class_217,InstructionInsertInputMode
-# method_562,
+method_562,GetInstruction
+param_3899,instructionRef
+method_563,DraggingInstructionOfType
+param_3900,instructionType
 field_1907,startMousePos
-# field_1908,
-# field_1909,
+field_1908,draggedInstructions
+field_1909,cursorInstruction
 param_3892,solEditScrn
 param_3893,startMousePos
 param_3894,solEditScrn
@@ -2879,14 +2915,15 @@ param_3895,startMousePos
 param_3896,solEditScrn
 param_3897,solEditScrn
 param_3898,solEditScrn
-# param_3899,
-# param_3900,
 ## NestedClasses
-# enum_140,
-# class_220,
+enum_140,InsertOperation
+enum_140.0,Cancel
+enum_140.1,Delete
+enum_140.2,Insert
+class_220,DraggedInstruction
 field_1912,type
-# field_1913,
-# field_1914,
+field_1913,dragOffset
+field_1914,originalPosition
 class_219,InstructionMatcher
 method_565,IsMatching
 field_1911,instruction
@@ -2900,6 +2937,7 @@ field_1910,instruction
 class_258,InstrInsertPrecursorInputMode
 method_560,StartInputMode
 method_561,StartInputMode
+method_695,StartInputMode
 field_2066,startMousePos
 field_2067,instruction
 param_4185,solEditScrn
@@ -2979,15 +3017,19 @@ method_188,EnableInput
 method_189,DisableInput
 method_190,DisableNonKeyInput
 method_191,ForceNextDelete
-method_192,WhileKeyHeld
+method_192,IsKeyHeld
 method_193,IsModifierKeyHeld
-method_194,IsKeyCombination
-method_195,IsKeyCombination
+method_194,IsKeyCombinationPressed
+method_195,IsKeyCombinationPressed
+method_2290,IsKeyCombinationHeld
+param_8387,modifier1
+param_8388,modifier2
+param_8389,key
 method_196,IsEnterPressed
 method_197,IsDeletePressed
 method_198,IsKeyPressed
 method_199,IsKeyReleased
-method_200,IsKeyHeld
+method_200,IsKeyTyped
 method_201,GetCharByInput
 method_202,MousePos
 method_203,MouseDelta
@@ -3035,7 +3077,8 @@ enum_142,MouseButtonType
 enum_142.1,LeftClick
 enum_142.2,MiddleClick
 enum_142.3,RightClick
-# enum_142.4,?
+enum_142.4,MouseButton4
+enum_142.5,MouseButton5
 
 
 ## SolitaireScreen
@@ -3331,13 +3374,13 @@ field_2967,isD3D11
 field_2968,shader
 # field_2971,
 # field_2972,
-field_2969,textures
+field_2969,boundTextures
 field_2970,samplerModes
 field_2973,vertexArray
 field_2974,vertexBuffer
 field_2975,elementArrayBuffer
-field_2976,textures
-field_2977,shaders
+field_2976,allTextures
+field_2977,allShaders
 # field_2979,
 # field_2980,
 # field_2981,
@@ -3402,7 +3445,7 @@ param_5100,indices
 param_5101,baseVertex
 param_5102,mesh
 param_5103,window
-# param_5104,
+param_5104,vsyncEnabled
 param_5105,window
 param_5106,width
 param_5107,height
@@ -3415,15 +3458,15 @@ param_5112,png
 param_5113,path
 ## NestedClasses
 class_389,PsdHelper
-method_1345,GetHeightDif
+method_1345,GetVerticalSlicePos
 param_8288,psdGuide
 field_2983,texture
 ## LambdaGeneratedClass
 class_487,LambdaGeneratedClass
 field_4252,instance
-# method_1346,
-# method_1347,
-# method_1348,
+method_1346,IsHorizontal
+method_1347,GetHorizontalSlicePos
+method_1348,IsVertical
 param_8289,psdGuide
 param_5114,psdGuide
 param_5115,psdGuide
@@ -3527,7 +3570,7 @@ param_3252,count
 param_3253,indices
 param_3254,baseVertex
 param_3255,window
-# param_3256,
+param_3256,vsyncEnabled
 param_3257,window
 param_3258,width
 param_8045,height
@@ -3607,6 +3650,7 @@ class_279,Window
 method_756,IsScreenTarget
 method_757,GetSize
 method_758,SetSizeOfWindow
+param_4284,size
 method_759,GetWidth
 method_760,GetHeight
 method_761,SetSize
@@ -3622,29 +3666,30 @@ method_770,SetFullscreen
 method_771,SetSizeWithScaling
 method_772,SetSizeToDrawable
 method_773,RequiresScaling
-# method_774,
-# method_775,
+method_774,GetActiveDisplayResolution
+method_775,GetDisplayResolution
 field_2191,HiDPIscaling
 field_2192,window
 field_2193,renderWindow
 field_2194,size
-# field_2195,
-# field_2196,
-# field_2197,
-# field_2198,
-# field_2199,
-# field_2200,
-# field_2201,
-# field_2202,
-# field_2203,
-# field_2204,
+field_2195,mousePosition
+field_2196,mouseDelta
+field_2197,scrollWheelDelta
+field_2198,heldKeys
+field_2199,prevFrameHeldKeys
+field_2200,keyPressesIncludingRepeats
+field_2201,heldMouseButtons
+field_2202,prevFrameHeldMouseButtons
+field_4477,deferredMouseUps
+field_2203,textInputChar
+field_2204,unloadRequested
 param_4282,window
 param_4283,renderWindow
 param_4285,size
 param_4286,color
 param_4287,toFullscreen
 param_4288,size
-# param_4289,
+param_4289,displayIndex
 
 ## IRenderCanvas
 interface_3,IRenderCanvas
@@ -3685,6 +3730,8 @@ param_4180,obj
 
 ## TextureFormat
 enum_3,TextureFormat
+enum_3.1,Alpha
+enum_3.2,RGBA
 
 ## TextureBatch
 class_100,TextureBatch
@@ -4038,16 +4085,16 @@ param_3321,bottom
 param_3322,top
 param_3323,universal
 
-## LightDirData
-struct_25,LightDirData
-field_1735,lightTexture
-# field_1736,
-# field_1737,
-# field_1738,
-param_2481,lightTexture
-# param_3790,
-# param_3791,
-# param_3792,
+## ArmCursorIntersectionData
+struct_25,ArmCursorIntersectionData
+field_1735,texture
+field_1736,pos
+field_1737,pivotOffset
+field_1738,rotation
+param_2481,texture
+param_3790,pos
+param_3791,pivotOffset
+param_3792,rotation
 
 ## FlippingMode
 enum_1,FlippingMode
@@ -4072,17 +4119,18 @@ enum_0.2,Right
 
 ## MusicManager
 class_251,MusicManager
-method_673,SetTrack
-# method_674,
-# method_675,
-# method_677,
+method_673,SetTrackWithFade
+method_674,SetTrackImmediately
+method_675,FadeOutMusic
+param_4168,fadeDurationSeconds
 method_676,UpdateMusic
-# field_2032,
-# field_2033,
-# field_2034,
-# field_2035, defaultMusic?
-# field_2036, currentMusic?
-# field_2037,
+method_677,UpdateTrackPosition
+field_2032,fadeOutDurationSeconds
+field_2033,fadeInDurationSeconds
+field_2034,volumeMultiplier
+field_2035,currentTrack
+field_2036,nextTrack
+field_2037,musicVolume
 param_4166,musicTrack
 param_4167,musicTrack
 param_4170,musicTrack
@@ -4265,7 +4313,7 @@ param_8126,value
 param_8127,value
 param_3756,format
 ## NestedClasses
-class_164,AsyncStateMachine
+class_164,AsyncStateMachine_MergeRandom
 class_163,SourceKeyIndexer
 generic_8,TSource
 generic_9,TKey
@@ -4279,18 +4327,18 @@ param_3757,Source
 class_96,Extensions
 method_96,GetOrNone
 method_97,GetNonEmpty
-method_98,Transform
+method_98,SelectSome
 method_99,GetOrDefault
 param_100,dict
 param_101,key
 param_102,enumerable
 param_103,enumerable
-param_104,transform
+param_104,selector
 param_105,maybe
 param_106,value
 # NestedClasses
-class_508,AsyncStateMachine1
-class_509,AsyncStateMachine2
+class_508,AsyncStateMachine_SelectAndGetNonEmpty
+class_509,AsyncStateMachine_GetNonEmpty
 
 ## HexTransform
 class_202,HexTransform
@@ -4658,12 +4706,14 @@ param_3983,color
 ## TextureAssets
 class_17,TextureAssets
 method_51,InitColors
+method_52,LoadTextures
 field_71,white
 field_72,black
 field_73,transparent
+param_65,progressReporter
 
-## PngImage
-class_272,PngImage
+## ImageData
+class_272,ImageData
 method_733,GetWidth
 method_734,GetHeight
 method_735,Save
@@ -4719,46 +4769,46 @@ field_2154,naver_17_25
 ## Font
 class_233,Font
 method_607,ParseValid
+param_3969,toValid
 method_608,GetGlyphInfoForChar
+param_3970,glyphIndex
+param_3971,info
 method_609,GetGlyphInfoForChar
+param_3972,glyphIndex
 method_610,BasicGlyphs
 method_611,ExtendedGlyphs
 method_612,Create
-# method_613,
-# method_614,
-field_1965,unicodeBlackCircleGlyphInfo
-# field_1966,
-# field_1967,
-# field_1968,
-# field_1969,
-# field_1970,
-# field_1971,
-# field_1972,
-# field_1973,
-param_3969,toValid
-param_3970,glyphIndex
-param_3971,info
-param_3972,glyphIndex
 param_3973,fontFileName
 param_3974,pointSize
-# param_3975,
-# param_8151,
+param_3975,alphaCorrectionFactor
+param_8151,lineAdvanceOffset
 param_8548,validRanges
-# param_3977,
-# param_3978,
-# param_3979,
-## NestedClasses
-# class_234,
-# field_1974,
-# field_1975,
-# field_1976,
-# field_1977,
-# field_1978,
-# field_1979,
-# field_1980,
-# field_1981,
-# field_1982,
-# field_1983,
+method_613,DumpGlyph
+param_3977,data
+param_3978,glyphIndex
+method_614,LoadCodePage437BitmapFontFromImage
+param_3979,filePath
+field_1965,unicodeBlackCircleGlyphInfo
+field_1966,ascent
+field_1967,descent
+field_1968,lineAdvance
+field_1969,validGlyphRanges
+field_1970,glyphInfo
+field_1971,atlasTextureSize
+field_1972,atlasTextures
+field_1973,defaultAtlasTextureSize
+## FontDataForDumping
+class_234,FontDataForDumping
+field_1974,d3d11FontRenderer
+field_1975,atlasTextureSize
+field_1976,atlasTextures
+field_1977,pointSize
+field_1978,alphaCorrectionFactor
+field_1979,glyphBitmapBuffer
+field_1980,currentX
+field_1981,currentY
+field_1982,nextRowY
+field_1983,glyphIndexZeroInfo
 
 ## StyleableFont
 class_1,StyleableFont
@@ -4826,18 +4876,20 @@ param_44,volumeMultiplier
 ## Sound
 method_2148,PlaySoundDefault
 field_4060,id
-# field_4061,
-field_4062,isPlaying
+field_4061,audioSource
+field_4062,playedThisFrame
 param_5742,volumeMultiplier
 
 ## SoundAssets
 class_201,SoundAssets
 method_539,Init
-method_540,ResetPlayingSounds
+param_3876,progressReporter
+method_540,ResetPlayedThisFrame
 
 ## MusicAssets
 class_102,MusicAssets
 method_129,Init
+param_132,progressReporter
 field_968,map
 field_969,solitaire
 field_970,solving1
@@ -4855,22 +4907,136 @@ field_978,title
 
 ## MusicTrack
 class_186,MusicTrack
+field_1739,audioSource
+field_1740,lastPlayedAt
+field_1741,playbackPosition
 
 ## AudioManager
 class_158,AudioManager
+field_1603,deviceId
+field_1604,handle
+field_1605,audioCallback
+field_1606,sampleRate
+field_1607,dummyAudioFile
 method_372,Init
-method_375,LoadAudioFile
+method_373,WriteAudioToBuffer
+param_3634,userData
+param_3635,buffer
+param_3636,byteLength
+method_374,GetHandle
+method_375,CreateAudioSource
 param_3637,filePath
+method_376,PlaySound
+param_3638,file
+param_3639,volume
+param_3640,looping
 
-## AudioFile
-class_244,AudioFile
+## AudioManagerHandle
+class_113,AudioManagerHandle
+field_1418,music
+field_1419,sounds
+field_1420,debugGameAudioRecording
+method_154,Unlock
+
+## AudioStream
+class_165,AudioStream
+method_467,WriteToBuffer
+param_3759,buffer
+param_3760,sampleCount
+param_3761,volume
+param_3762,loop
+method_468,HasEnded
+method_469,Seek
+param_3763,time
+method_470,Close
+
+## DummyAudioStream
+class_180,DummyAudioStream
+param_3785,buffer
+param_3786,sampleCount
+param_3787,volume
+param_3788,loop
+param_3789,time
+
+## RawAudioStream
+class_273,RawAudioStream
+field_2127,file
+field_2128,sampleIndex
+param_4250,buffer
+param_4251,sampleCount
+param_4252,volume
+param_4253,loop
+param_4254,time
+
+## OggAudioStream
+class_225,OggAudioStream
+field_1942,oggVorbisFile
+field_1943,ended
+param_3940,buffer
+param_3941,sampleCount
+param_3942,volume
+param_3943,loop
+param_3944,time
+
+## AudioSource
+class_244,AudioSource
 field_2006,sourceFileName
+method_91,GetAudioStream
 
-## AudioFileWav
-class_94,AudioFileWav
+## RawAudioSource
+class_94,RawAudioSource
+field_935,samples
 
-## AudioFileOgg
-class_287,AudioFileOgg
+## OggAudioSource
+class_287,OggAudioSource
+field_2233,filePath
+
+## DummyAudioSource
+class_280,DummyAudioSource
+field_2205,source
+
+## WrappedAudioStream
+class_276,WrappedAudioStream
+param_4273,file
+param_4274,volume
+param_4275,looping
+field_2181,source
+field_2182,volume
+field_2183,looping
+field_2184,fadeVolume
+field_2185,fadeVolumeChangePerSecond
+method_748,GetSource
+method_749,SetSource
+param_4276,source
+method_750,SetFile
+param_4277,file
+method_751,IsActive
+method_752,FadeIn
+param_4278,durationSeconds
+method_753,FadeOut
+param_4279,durationSeconds
+
+## WavFile
+class_99,WavFile
+field_952,channelCount
+field_953,sampleRate
+field_954,bitsPerSample
+field_955,data
+method_115,GetSampleCount
+method_116,GetLengthSeconds
+method_117,LogInfo
+param_109,label
+method_118,ReadFromFile
+param_110,filePath
+method_119,WriteToFile
+param_111,filePath
+param_112,sampleRate
+param_113,samples
+method_120,GetAsciiBytes
+param_114,str
+method_121,AssertTrue
+param_115,flag
+param_116,exceptionMessage
 
 ## CurveAssets
 class_278,CurveAssets
@@ -5199,7 +5365,7 @@ field_4143,tempFilePath
 field_4144,puzzlePreviewPath
 param_8365,result
 field_3487,unknownError
-class_456,AsyncStateMachine
+class_456,AsyncStateMachine_EnumeratePuzzlesInFolder
 class_453,PuzzleMatcher
 method_2252,IsSameId
 field_4141,puzzle
@@ -5417,20 +5583,93 @@ param_8721,instruction
 
 ## GifRecorder
 class_92,GifRecorder
+param_88,outputLoc
 field_915,paletteDataLoaded
-field_916,paletteData1
-field_917,paletteData2
+field_916,paletteColors
+field_917,paletteLookupTable
+field_4168,width
+field_919,height
+field_920,maximumLoopCount
 field_921,frameTime
 field_922,outputStream
+field_923,pixelBuffer
+field_924,currentFrameRgb
+field_925,previousFrameRgb
+field_926,pixelsChanged
+field_927,pixelPaletteIndices
+field_928,paletteBitWidth
+field_929,paletteBitWidthMinus1
+field_930,isFirstFrame
+field_931,widthHeightSet
 field_4495,outputLocation
 method_74,LoadPaletteData
 method_75,SetFrameTime
+param_89,centiseconds
 method_76,RenderFrame
+param_90,imageData
 method_77,CloseStream
 method_78,CancelRecording
-param_88,outputLoc
-param_89,centiseconds
-param_90,pngImage
+method_79,ComputePaletteIndices
+method_80,ExtractRgbFromRgba
+method_81,WriteGraphicsControlExtensionBlock
+method_82,WriteLocalImageDescriptor
+method_83,WriteFileHeader
+method_84,WriteNetscapeLoopingExtensionBlock
+method_85,WritePaletteData
+method_86,WriteFrameImageData
+method_87,WriteIntLower2Bytes
+param_5842,value
+method_88,WriteString
+param_92,str
+
+## GifFrameWriter
+class_289,GifFrameWriter
+param_8189,width
+param_8190,height
+param_4403,paletteIndices
+param_4404,paletteBitWidth
+field_2242,pixelDataEndMarker
+field_2243,width
+field_2244,height
+field_2245,paletteIndices
+field_2246,paletteBitWidth
+field_2247,pixelsRemaining
+field_2248,pixelIndex
+# field_2249,
+# field_2250,
+# field_2251,
+# field_2252,
+# field_2253,
+# field_2254,
+# field_2255,
+# field_2256,
+# field_2257,
+# field_2258,
+# field_2259,
+# field_2260,
+# field_2261,
+# field_2262,
+# field_2263,
+# field_2264,
+# field_2265,
+# field_2266,
+# field_2267,
+# method_792,
+# param_4405,
+# param_4406,
+# method_793,
+# method_794,
+# method_795,
+# param_4409,
+param_4410,stream
+# method_796,
+param_4411,stream
+# method_797,
+param_4412,stream
+method_798,Pow2Minus1
+param_4413,value
+method_799,GetNextPixelData
+# method_800,
 
 ## EscapeScreen
 class_178,EscapeScreen
@@ -6157,33 +6396,50 @@ field_1584,lineWidth
 param_3596,bounds
 param_3597,isHover
 param_3598,isEnabled
-# class_149,                    -- Should Remove this with Quintessencial
-# method_348,
-# method_349,
-# method_350,
+class_149,UnusedButtons
+method_348,UnusedTextButton
+param_3599,text
+param_3600,position
+param_3601,size
+method_349,IconButton
+param_3602,iconTexture
+param_3603,position
+param_3604,size
+method_350,ClickableText
+param_3605,text
+param_8098,position
 ## NestedClasses
-# class_150,
+class_150,ClickableText
 method_351,GetBounds
 method_352,RenderButton
-# field_1585,
-# field_1586,
-# class_151,
+param_8099,bounds
+param_8100,isHover
+param_3609,isEnabled
+field_1585,text
+field_1586,position
+class_151,IconButton
 method_353,GetBounds
 method_354,RenderButton
-# field_1587,
-# field_1588,
-# field_1589,
-# class_152,
+param_8101,bounds
+param_3610,isHover
+param_3611,isEnabled
+field_1587,position
+field_1588,size
+field_1589,iconTexture
+class_152,UnusedTextButton
 method_355,GetBounds
 method_356,RenderButton
-# field_1590,
-# field_1591,
-# field_1592,
+param_3612,bounds
+param_3613,isHover
+param_3614,isEnabled
+field_1590,position
+field_1591,size
+field_1592,text
 
-## ScoreData
-class_132,ScoreData
+## ScoreDataForDisplay
+class_132,ScoreDataForDisplay
 field_1480,type
-field_1481,saveKey
+field_1481,leaderboardKey
 field_1482,histogramData
 field_1483,best
 field_1484,previous
@@ -6418,14 +6674,16 @@ method_934,GetLogManager
 method_935,SetLogManager
 method_936,GetScreenTransition
 method_937,SetScreenTransition
-# method_2383,
+method_2383,GetBackgroundFadeOverlayAlpha
 method_938,GetCurrentScreen
 method_939,GetBelowCurrentScreen
 method_940,IsMinWindow
 method_941,IsWindowOver1080p
 method_942,GameInit
-# method_943,
-# method_944,
+method_943,UpdateLoadingScreen
+param_4612,renderLoadingScreen
+method_944,UpdateLoadingProgress
+param_4613,progress
 method_945,PushScreen
 method_946,PushScreen
 method_2384,PopScreen
@@ -6434,37 +6692,38 @@ method_949,PopScreen
 method_950,PopScreens
 method_951,ForceRemoveScreenType
 method_952,HasScreenOfType
-# method_954,
+method_954,_DoNothing
 method_2386,InitFonts
 method_956,ContentInit
 method_957,GameLoop
-# method_958,
-# method_959,
+method_958,HandleSdlWindowEvent
+param_4625,sdlEvent
+method_959,UpdateFullscreenStateAndResolution
 method_960,CreateWindow
 method_961,GetCursorAsset
-# method_962,
+method_962,GetPlayerId
 method_963,GameUnload
-# method_964,
-# method_965,
-# method_966,
-# method_967,
+method_964,AddTextureLoadingProgress
+method_965,IncrementFontLoadingProgress
+method_966,Unused_OnFileRename
+method_967,Unused_OnFileSystemEvent
 field_2434,instance
 field_2435,rendererType
 field_2436,windows
 field_2437,gameWindow
-# field_2438,
-# field_2439,
-# field_2440,
-# field_2441,
-# field_2442,
+field_2438,gameRenderTarget
+field_2439,currentResolution
+field_2440,shouldUpdateFullscreenState
+field_2441,shouldUpdateResolution
+field_2442,shouldReloadTexturesAndShaders
 field_2443,musicManager
 field_2444,time
-# field_2445,
-# field_2446,
-# field_2447,
-# field_2448,
-# field_2449,
-# field_2450,
+field_2445,lastLoadingScreenRenderTime
+field_2446,loadingProgressCounter
+field_2447,emulatingEscapePress
+field_2448,emulatingRightClick
+field_2449,currentSdlCursor
+field_2450,currentSdlCursorVisibility
 field_2451,saveData
 field_2452,settingsData
 field_2453,logManager
@@ -6473,19 +6732,19 @@ field_2455,screenTransition
 field_2456,timeSinceTransition
 field_2457,httpManager
 field_2458,scoreManager
-# field_2459,
+field_2459,unused
 field_2460,workshopManager
 field_2461,globalSolutions
-# field_4597,
+field_4597,solitaireStates
 field_2464,fadeBackground
-# field_2465,
-# field_2466,
+field_2465,backgroundFadeAmount
+field_2466,journalAndUserContentScreenIndex
 field_2467,solutionQueue
-# field_2468,
-# field_4598,
-# field_4599,
-# field_4600,
-# field_4601,
+field_2468,productionPuzzleChamberMaskRenderT
+field_4598,unusedRenderT
+field_4599,currentlyRenderingProductionPuzzle
+field_4600,backgroundFadeTimeSeconds
+field_4601,backgroundFadeOverlayMaxAlpha
 param_8220,logManager
 param_8221,transition
 param_4614,screen
@@ -6498,22 +6757,35 @@ param_8604,amount
 param_8605,outTransition
 param_8606,inTransition
 param_4623,amount
-# param_8607,
+param_8607,progressReporter
 param_4626,title
 param_4627,width
 param_8222,height
-param_4628,center
+param_4628,displayIndex
 param_4629,path
 param_4630,texture
 param_4631,exitCode
-# param_8223,
-# param_8224,
-# param_8225,
+param_8223,addedProgress
+param_8224,maxProgress
+param_8225,maxProgress
 # param_8233,
 # param_4634,
 # param_4635,
 # param_4636,
 ## NestedClasses
+class_323,ScreenTransitionUpdater
+field_2473,currentScreen
+field_2474,screenUpdater
+method_969,UpdateNoTransition
+method_970,UpdateFadeOutPush
+method_2387,UpdateFadeInPush
+method_972,UpdateFadeOutPop
+method_2388,UpdateFadeInPop
+param_4637,transition
+param_4638,transition
+param_8608,transition
+param_4640,transition
+param_8609,transition
 class_324,ScreenUpdater
 method_974,UpdateScreen
 field_4195,gameLogic
@@ -6575,11 +6847,11 @@ class_110,AppConsts
 field_1002,title
 field_1003,gamePath
 field_1004,gameIdentifier
-# field_1005,
+field_1005,zachtronicsStatsUrl
 field_1006,steamAppId
 field_4471,steamDeReMetallicaId
 field_1007,minWindowSize
-field_1008,centeredWindows
+field_1008,explicitDisplayIndex
 field_1009,use_CONTEXT_PROFILE_MASKs
 field_1010,isDevEnv
 field_1011,vsync
@@ -6587,9 +6859,9 @@ field_1012,requireSteam
 field_1013,linkCrashSite
 field_1014,showLogWindow
 field_1015,fullscreenWindows
-# field_4472,
-# field_1017,
-# field_1018,
+field_4472,unused1080pDimensions
+field_1017,dumpSystemFontsAndShaderCompilerLogs
+field_1018,ignoreMissingTextures
 field_1019,useMutexLaunch
 field_1020,resizableWindows
 field_1021,validateInstructionIds
@@ -6602,7 +6874,7 @@ field_1028,dumpLore
 field_1029,generatePuzzlePreviews
 field_1030,allowMarkingHexes
 field_1031,testAtomRender
-# field_1032,
+field_1032,recordAndDumpGameAudio
 field_4473,forceDisableDlc
 
 ## Platform
@@ -6638,6 +6910,383 @@ method_24,FlipUInt
 ## StringLoader
 class_103,StringLoader
 
+## LoadingScreenTitleRenderer
+class_322,LoadingScreenTitleRenderer
+field_2472,loadingProgress
+method_968,Render
+
+## GLRenderer
+field_2219,vsyncEnabled
+# LinkShader
+param_4320,vertexShaderHandle
+param_4321,pixelShaderHandle
+# LoadShaderFile
+param_8180,shaderType
+param_4322,shaderFilePath
+# DestroyShader
+param_4323,shaderHandle
+# Present
+param_4392,window
+param_4393,vsyncEnabled
+
+## PsdImage
+field_2754,width
+field_2755,height
+field_2756,channelCount
+field_2757,layers
+field_2758,pixelData
+field_2759,imageResources
+method_1228,LoadImageDataFromPath
+param_4953,path
+method_1229,LoadPsdDataFromPath
+param_4954,path
+method_1230,PadStreamPositionToAlignment
+param_4955,stream
+param_4956,currentAlignmentOffset
+param_4957,targetAlignment
+method_1231,ReadRgba
+param_4958,reader
+param_4959,width
+param_4960,height
+param_4961,channels
+method_1232,SkipRleRowLengthData
+param_4962,reader
+param_8268,height
+param_4964,channelCount
+method_1233,ReadColorChannelBytes
+param_4965,reader
+param_4966,encoding
+param_4967,bounds
+method_1234,LogData
+param_4968,includeChannelData
+method_1235,NotImplemented
+method_1236,NotImplemented2
+method_1237,GetPsdGuides
+method_1238,GetPsdGuides
+param_4973,imageResources
+method_1239,AssertTrue
+param_4974,flag
+method_1240,ReadBounds
+param_4975,reader
+method_1241,ReadRunLengthEncodedBytes
+param_4976,reader
+param_4977,count
+method_1242,ReadImageResources
+param_4978,reader
+method_1243,LoadPsdGuidesFromFile
+param_4979,path
+## RunLengthDecodingState
+enum_155,RunLengthDecodingState
+enum_155.0,ReadLength
+enum_155.1,ReadNonRepeatingBytes
+enum_155.2,ReadRepeatedByte
+## GeneratedClass
+class_482,GeneratedClass
+field_4239,instance
+field_4240,unused
+field_4241,unused2
+method_1244,ByteToHexString
+param_8269,value
+method_1245,IsPsdGuide
+param_8270,imageResource
+
+## PsdCompressionMethod
+enum_139,PsdCompressionMethod
+
+## RgbaArrays
+class_242,RgbaArrays
+field_2000,sourceCompressionMethod
+field_2001,red
+field_2002,green
+field_2003,blue
+field_2004,alpha
+
+## PsdBounds
+struct_24,PsdBounds
+field_1649,left
+field_1651,right
+field_1648,top
+field_1650,bottom
+method_472,Width
+method_473,Height
+method_474,IsZeroSize
+method_475,Create
+param_3770,left
+param_3771,right
+param_3772,top
+param_3773,bottom
+
+## PsdImageResource
+field_2762,type
+field_2763,name
+field_2764,data
+
+## PsdLayer
+class_271,PsdLayer
+field_2113,name
+field_2114,bounds
+field_2115,blendMode
+field_2116,opacity
+field_2117,isVisible
+field_2118,sectionDividerType
+field_2119,red
+field_2120,green
+field_2121,blue
+field_2122,alpha
+
+## PsdLayerChannelData
+class_127,PsdLayerChannelData
+field_1467,channelId
+field_1468,compressionMethod
+field_1469,encodedDataLength
+field_1470,decodedData
+
+## PsdChannelId
+enum_124,PsdChannelId
+
+## PsdSectionDividerType
+enum_141,PsdSectionDividerType
+enum_141.0,Default
+enum_141.1,OpenFolder
+enum_141.2,ClosedFolder
+enum_141.3,BoundingSectionDivider
+
+## PsdImageResourceId
+enum_134,PsdImageResourceId
+enum_134.1032,GridAndGuidesInfo
+
+## PsdGuide
+field_2752,position
+field_2753,direction
+# method_1227,  gets the position but divided by 32??? I don't know why
+
+## PsdGuideDirection
+enum_122,PsdGuideDirection
+enum_122.0,Horizontal
+enum_122.1,Vertical
+
+## HttpManager
+field_2523,pendingHttpRequests
+method_1019,SendGetRequest
+param_4668,url
+param_4669,onResponse
+param_4670,onFailure
+method_1020,PostOctetStream
+param_4671,url
+param_4672,data
+param_4673,onResponse
+param_4674,onFailure
+method_1021,PostHtmlForm
+param_4675,url
+param_4676,formFields
+param_4677,onResponse
+param_4678,onFailure
+method_1022,SendRequestAndGetResponse
+param_4679,request
+method_1023,SendRequestWithCallbacks
+param_4680,onResponse
+param_4681,onFailure
+param_4682,sendRequest
+method_1024,CheckPendingHttpRequests
+method_2389,ApplyUriEscapeCodes
+param_8611,str
+
+## OctetStreamPostRequest
+class_331,OctetStreamPostRequest
+field_2526,url
+field_2527,data
+field_2528,httpManager
+method_1026,SendRequestAndReadResponse
+
+## HtmlFormPostRequest
+class_332,HtmlFormPostRequest
+field_2529,formFields
+field_2530,url
+field_2531,httpManager
+method_1027,SendRequestAndReadResponse
+
+## GetRequest
+class_333,GetRequest
+field_2532,url
+field_2533,httpManager
+method_1028,SendRequestAndReadResponse
+
+## HttpRequestSender
+class_330,HttpRequestSender
+field_2524,request
+field_2525,sendMethod
+method_1025,SendRequest
+
+## HttpRequest
+class_334,HttpRequest
+field_2534,requestTask
+field_2535,onResponse
+field_2536,onFailure
+field_2537,responseData
+
+## GeneratedClass
+class_471,GeneratedClass
+field_4204,instance
+field_2538,unused
+method_1029,FormatFieldsForHtmlForm
+
+## ScoreManager
+field_3004,metrics
+field_3005,leaderboardEntriesToGet
+field_3006,histogramData
+field_3007,leaderboardEntries
+field_3008,topPercentiles
+field_4727,pendingExternalLeaderboardUploads
+method_2422,HasPendingExternalLeaderboardUploads
+method_1361,GetZachtronicsLeaderboardPlayerUrl
+param_5126,playerId
+method_1362,GetZachtronicsLeaderboardUrl
+method_1363,QueryLeaderboards2
+method_1364,QueryLeaderboards
+method_1365,UpdateScoresFromSolution
+param_5127,solution
+param_8647,metricScores
+param_5129,upload
+method_1366,GetLeaderboardKey
+param_5130,puzzle
+param_5131,metric
+method_1367,GetAllLeaderboards
+method_1368,QueryZachtronicsLeaderboard
+method_1369,SubmitScoreToSteamLeaderboard
+param_8291,puzzle
+param_8291,metric
+param_8291,score
+method_1370,QuerySteamLeaderboard
+param_5135,leaderboardKey
+method_1371,OnSteamLeaderboardFindResult
+param_8292,result
+param_5136,ioFailure
+method_1372,SetTopPercentile
+param_5137,leaderboardData
+param_5138,ioFailure
+method_1373,SetFriendScores
+param_8293,leaderboardData
+param_5139,ioFailure
+method_1374,GetSteamLeaderboardData
+param_5140,puzzle
+param_5141,metric
+method_1375,GetLeaderboardEntries
+param_5142,leaderboardKey
+method_1376,GetTopPercentile
+param_5143,leaderboardKey
+method_1377,GetScoreDataForDisplay
+param_5144,puzzle
+param_5145,solution
+method_1378,GetScoreDataForDisplay
+param_5146,puzzle
+param_5147,solution
+param_5148,metric
+method_2423,UploadToExternalLeaderboards
+param_8648,solution
+param_8649,gifFilePath
+method_1379,OnZachtronicsLeaderboardQueryResponse
+param_5149,responseData
+method_2424,OnExternalLeaderboardUploadResponse
+param_8650,responseData
+method_2425,OnExternalLeaderboardUploadFailure
+## ScoreDataWrapper
+class_396,ScoreDataWrapper
+field_3016,scoreData
+## ExternalLeaderboardFormData
+class_543,ExternalLeaderboardFormData
+field_4728,fields
+method_2426,AttachGif
+param_8651,gifFilePath
+## AsyncStateMachine
+class_395,AsyncStateMachine_EnumerateLeaderboards
+field_3009,currentValue
+field_3012,puzzlesWithLeaderboards
+field_3013,puzzle
+field_3014,metrics
+field_3015,metricIndex
+
+## LeaderboardEntries
+class_248,LeaderboardEntries
+param_4152,leaderboardHandle
+field_2008,leaderboardHandle
+field_2009,entries
+
+## LeaderboardEntry
+param_4718,userDisplayName
+param_4719,score
+param_4720,isPlayer
+param_4721,unused
+field_2593,userDisplayName
+field_2594,score
+field_2595,isPlayer
+field_2596,unused
+
+## SolutionManager
+# class_438,
+# class_499,
+method_2143,LoadAllSolutions
+method_2144,GetSolutionsForPuzzle
+param_5738,puzzle
+
+## RobustFileWriter
+field_2993,maxWriteAttempts
+field_2994,timeBetweenWrites
+field_2995,timeOfLastWrite
+field_2996,pendingWrites
+method_1355,WriteFile
+param_5118,filePath
+param_5119,data
+method_1356,WriteAsciiStringToFile
+param_5120,filePath
+param_5121,text
+method_1357,AttemptWrites
+method_1358,ShouldRetryWrite
+param_5122,exception
+
+## PendingFileWrite
+param_5124,filePath
+param_5125,data
+field_2998,filePath
+field_2999,data
+field_3000,hasSucceeded
+field_3001,failedWriteAttempts
+
+## Steam
+field_4072,events
+method_2149,CreateCallbacks
+method_2150,DiscardPreviousEventsAndRunCallbacks
+method_2151,GetEventsOfType
+method_2152,SetCallback
+## NestedClasses
+class_442,AsyncStateMachine_EnumerateEventsOfType
+
+## StringLoader
+method_131,GetObfuscatedStringById
+param_136,stringId
+
+## LibVorbisFile
+class_274,LibVorbisFile
+
+## SDL_Image
+class_267,SDL_Image
+
+## Range2.AsyncStateMachine
+class_387,AsyncStateMachine_EnumerateCoordinatesInRange
+field_2958,state
+field_2960,threadId
+field_2963,currentY
+field_2964,currentX
+
+## HexIndex.AsyncStateMachine_EnumerateSpiral
+class_327,AsyncStateMachine_EnumerateSpiral
+
+## HexIndex.AsyncStateMachine_EnumerateRing
+class_328,AsyncStateMachine_EnumerateRing
+
+## _CompilerGenerated
+class_9,_CompilerGenerated
+method_26,HashVignettePath
+param_39,path
 
 ## SDL
 struct_103,SDL_Event
@@ -6743,8 +7392,3 @@ method_2341,_DoNothing12
 method_2342,_DoNothing13
 method_2343,_DoNothing14
 method_2344,_DoNothing15
-# What even is this? Something PsdImage related...
-class_271,_UnusedClass9
-class_127,_UnusedClass10
-enum_124,_UnusedEnum0
-enum_141,_UnusedEnum1
